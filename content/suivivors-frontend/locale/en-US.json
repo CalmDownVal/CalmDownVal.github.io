@@ -1,6 +1,6 @@
 {
 	"common": {
-		"go-back": "Go Back"
+		"go-home": "Go Home"
 	},
 	"errors": {
 		"not-found": "The requested page {path} has not been found.",
