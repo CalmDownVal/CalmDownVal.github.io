@@ -1,1 +1,9 @@
-{}
+{
+	"common": {
+		"go-back": "Go Back"
+	},
+	"errors": {
+		"not-found": "The requested page {path} has not been found.",
+		"unknown": "An unknown error occurred in the application."
+	}
+}
