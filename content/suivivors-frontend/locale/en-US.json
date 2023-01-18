@@ -1,6 +1,23 @@
 {
-	"common": {
-		"go-home": "Go Home"
+	"main": {
+		"title": "Suivivors",
+		"back-home": "Back to Home"
+	},
+	"menu": {
+		"home": "Home",
+		"mint-shop": "Mint Shop",
+		"configurator": "Configurator",
+		"collection": "My Collection"
+	},
+	"social": {
+		"discord": "Discord",
+		"twitter": "Twitter"
+	},
+	"wallet": {
+		"address": "Address: {address}",
+		"connect": "Connect",
+		"connected": "Connected",
+		"disconnect": "Disconnect"
 	},
 	"errors": {
 		"not-found": "The requested page {path} has not been found.",
