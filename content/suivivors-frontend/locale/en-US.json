@@ -14,9 +14,10 @@
 		"twitter": "Twitter"
 	},
 	"wallet": {
-		"address": "Address: {address}",
 		"connect": "Connect",
+		"connect-tooltip": "Connect your SUI wallet",
 		"connected": "Connected",
+		"connected-tooltip": "SUI wallet connected: {address}",
 		"disconnect": "Disconnect"
 	},
 	"errors": {
