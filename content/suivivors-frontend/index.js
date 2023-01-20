@@ -136,28 +136,29 @@ uniform vec2 uResolution;
 uniform float uTime;
 
 void main() {
-	float h = uResolution.x / uResolution.y;
-	vec2 uv = gl_FragCoord.xy / uResolution;
-	uv.x *= h;
-
 	// const vec3 colorLo = vec3(0.42, 0.85, 0.98);
 	// const vec3 colorHi = vec3(0.53, 0.93, 0.98);
 	const vec3 colorLo = vec3(0.082, 0.396, 0.753);
 	const vec3 colorHi = vec3(0.098, 0.463, 0.824);
 
+	float aspect = uResolution.x / uResolution.y;
+	vec2 uv = gl_FragCoord.xy / uResolution;
+	uv.x *= aspect;
+
 	float influence = 0.0;
-	int count = int(length(uResolution) / 50.0);
+	float radiusBase = max(aspect, 1.0);
+
+	int count = clamp(int(uResolution.x * 0.01), 16, 128);
 	for (int i = 0; i < count; ++i) {
-		float radius = sin(float(i) * 15.30 + 11.02) * 0.15 + 0.25; // 0.1 .. 0.4
+		float radius = radiusBase * (sin(float(i) * 15.30 + 11.02) * 0.15 + 0.25); // 0.1 .. 0.4
 		vec2 pos = vec2(
-			sin(float(i) * 73.23 + 84.52) * 0.5 + 0.5, // 0.0 .. 1.0
-			sin(float(i) * 56.20 + 82.82) * 0.5 + 0.5  // 0.0 .. 1.0
+			(sin(float(i) * 73.23 + 84.52) * 0.5 + 0.5) * aspect, // 0.0 .. 1.0
+			 sin(float(i) * 56.20 + 82.82) * 0.5 + 0.5 // 0.0 .. 1.0
 		);
 
 		// wobble horizontally
 		float phase = sin(float(i) * 31.26 + 73.78) * 81.29;
 		pos.x += sin(phase + uTime * 0.1) * 0.2; // -0.2 .. 0.2
-		pos.x *= h;
 
 		// float up vertically
 		float speed = (sin(float(i) * 82.80 + 58.44) + 2.0) * 0.02;
