@@ -146,8 +146,7 @@ void main() {
 	const vec3 colorHi = vec3(0.098, 0.463, 0.824);
 
 	float influence = 0.0;
-
-	int count = int((uResolution.x * uResolution.y) / 20000.0);
+	int count = int(length(uResolution) / 50.0);
 	for (int i = 0; i < count; ++i) {
 		float radius = sin(float(i) * 15.30 + 11.02) * 0.15 + 0.25; // 0.1 .. 0.4
 		vec2 pos = vec2(
