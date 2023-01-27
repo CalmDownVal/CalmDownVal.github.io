@@ -1,13 +1,19 @@
 {
-	"main": {
-		"title": "Suivivors",
-		"back-home": "Back to Home"
-	},
+	"title": "Suivivors",
 	"menu": {
 		"home": "Home",
 		"mint-shop": "Mint Shop",
 		"configurator": "Configurator",
-		"collection": "My Collection"
+		"my-collection": "My Collection"
+	},
+	"page": {
+		"my-collection": {
+			"title": "Configurator",
+			"equip": "Equip",
+			"equipped": "Equipped",
+			"try": "Try",
+			"trying": "Trying"
+		}
 	},
 	"social": {
 		"discord": "Discord",
@@ -20,8 +26,48 @@
 		"connected-tooltip": "SUI wallet connected: {address}",
 		"disconnect": "Disconnect"
 	},
-	"errors": {
+	"error": {
+		"api": "Failed to fetch from the API.",
 		"not-found": "The requested page {path} has not been found.",
 		"unknown": "An unknown error occurred in the application."
+	},
+	"trait": {
+		"accessories": {
+			"category-name": "Accessories"
+		},
+		"background": {
+			"category-name": "Background"
+		},
+		"clothes": {
+			"category-name": "Clothes",
+			"ethos-shirt": "Ethos Shirt",
+			"ethos-tee": "Ethos T-Shirt",
+			"ethos-vest": "Ethos Vest",
+			"whitelisted-tee": "Whitelisted T-Shirt"
+		},
+		"eyes": {
+			"category-name": "Eyes",
+			"default": "Default"
+		},
+		"eyewear": {
+			"category-name": "Eyewear",
+			"ethos-hearts": "Ethos Hearts",
+			"wallet": "Wallet"
+		},
+		"hair": {
+			"category-name": "Hair",
+			"default": "Default",
+			"ethos-beanie": "Ethos Beanie"
+		},
+		"item": {
+			"category-name": "Item"
+		},
+		"mouth": {
+			"category-name": "Mouth"
+		},
+		"skin": {
+			"category-name": "Skin",
+			"default": "Default"
+		}
 	}
 }
