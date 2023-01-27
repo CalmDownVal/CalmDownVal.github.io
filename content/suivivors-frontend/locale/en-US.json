@@ -1,12 +1,15 @@
 {
 	"title": "Suivivors",
-	"menu": {
-		"home": "Home",
-		"mint-shop": "Mint Shop",
-		"configurator": "Configurator",
-		"my-collection": "My Collection"
-	},
 	"page": {
+		"home": {
+			"title": "Home"
+		},
+		"mint-shop": {
+			"title": "Mint Shop"
+		},
+		"configurator": {
+			"title": "Configurator"
+		},
 		"my-collection": {
 			"title": "Configurator",
 			"equip": "Equip",
