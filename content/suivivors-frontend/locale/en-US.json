@@ -2,7 +2,13 @@
 	"title": "Suivivors",
 	"page": {
 		"home": {
-			"title": "Home"
+			"title": "Home",
+			"motto": "Dynamic NFTs are the way forward",
+			"step-mint": "Mint",
+			"step-go-to": "Go to",
+			"step-swap": "Swap Traits",
+			"step-share": "Share with everyone!",
+			"mint-promo": "Suivivors X Ethos"
 		},
 		"mint-shop": {
 			"title": "Mint Shop"
