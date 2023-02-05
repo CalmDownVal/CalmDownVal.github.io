@@ -64,7 +64,7 @@ uniform float uTime;
 
 void main() {
 	const vec3 colorLo = vec3(0.247, 0.816, 1.0);
-	const vec3 colorHi = vec3(0.153, 0.886, 1.0);
+	const vec3 colorHi = vec3(0.294, 0.906, 1.0); // vec3(0.153, 0.886, 1.0);
 
 	float aspect = uResolution.x / uResolution.y;
 	vec2 uv = gl_FragCoord.xy / uResolution;
