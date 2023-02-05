@@ -16,6 +16,9 @@
 			"equipped": "Equipped",
 			"try": "Try",
 			"trying": "Trying"
+		},
+		"error": {
+			"back-home": "Back Home"
 		}
 	},
 	"social": {
@@ -24,10 +27,13 @@
 	},
 	"wallet": {
 		"connect": "Connect",
-		"connect-tooltip": "Connect your SUI wallet",
 		"connected": "Connected",
-		"connected-tooltip": "SUI wallet connected: {address}",
-		"disconnect": "Disconnect"
+		"disconnect": "Disconnect",
+		"preferred": "Preferred",
+		"other": "Other",
+		"install-prompt": "{wallet} Is Not Installed",
+		"install": "Install",
+		"back": "Back"
 	},
 	"error": {
 		"api": "Failed to fetch from the API.",
@@ -35,42 +41,57 @@
 		"unknown": "An unknown error occurred in the application."
 	},
 	"trait": {
-		"accessories": {
-			"category-name": "Accessories"
-		},
 		"background": {
-			"category-name": "Background"
+			"title": "Background",
+			"0": "default",
+			"1": "Ethos Background"
 		},
-		"clothes": {
-			"category-name": "Clothes",
-			"ethos-shirt": "Ethos Shirt",
-			"ethos-tee": "Ethos T-Shirt",
-			"ethos-vest": "Ethos Vest",
-			"whitelisted-tee": "Whitelisted T-Shirt"
-		},
-		"eyes": {
-			"category-name": "Eyes",
-			"default": "Default"
-		},
-		"eyewear": {
-			"category-name": "Eyewear",
-			"ethos-hearts": "Ethos Hearts",
-			"wallet": "Wallet"
-		},
-		"hair": {
-			"category-name": "Hair",
-			"default": "Default",
-			"ethos-beanie": "Ethos Beanie"
-		},
-		"item": {
-			"category-name": "Item"
-		},
-		"mouth": {
-			"category-name": "Mouth"
+		"item1": {
+			"title": "Item 1"
 		},
 		"skin": {
-			"category-name": "Skin",
-			"default": "Default"
+			"title": "Skin",
+			"0": "default",
+			"1": "Ethos Skin"
+		},
+		"clothes": {
+			"title": "Clothes",
+			"0": "Ethos Shirt",
+			"1": "Ethos T-Shirt",
+			"2": "Ethos Vest",
+			"3": "Whitelist T-Shirt"
+		},
+		"mouth": {
+			"title": "Mouth",
+			"0": "Ethos Smile",
+			"1": "Airdrop"
+		},
+		"eyes": {
+			"title": "Eyes",
+			"0": "default",
+			"1": "Ethos Eyes"
+		},
+		"hair": {
+			"title": "Hair",
+			"0": "default",
+			"1": "Ethos Original Hair",
+			"2": "Ethos Short Hair"
+		},
+		"item2": {
+			"title": "Item 2"
+		},
+		"accessories": {
+			"title": "Accessories"
+		},
+		"eyewear": {
+			"title": "Eyewear",
+			"0": "Ethos Round Glasses",
+			"1": "Ethos Heart Glasses"
+		},
+		"headwear": {
+			"title": "Headwear",
+			"0": "Ethos Beanie",
+			"1": "Capy Hat"
 		}
 	}
 }
