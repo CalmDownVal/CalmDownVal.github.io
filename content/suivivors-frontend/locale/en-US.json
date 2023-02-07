@@ -8,7 +8,25 @@
 			"step-go-to": "Go to",
 			"step-swap": "Swap Traits",
 			"step-share": "Share with everyone!",
-			"mint-promo": "Suivivors X Ethos"
+			"mint-promo": "Suivivors X Ethos",
+			"suivivor-ethos": "Ethos Suivivor",
+			"suivivor-ethos-desc": "Unique 1/1 Suivivor",
+			"mystery-box": "Mystery Box",
+			"mystery-box-desc": "With special traits and 100 whitelist spots",
+			"twitter-prompt": "Do you follow us on Twitter yet?",
+			"action": {
+				"mint": "Mint",
+				"follow": "Follow",
+				"skip": "Skip",
+				"continue": "Continue",
+				"view": "View",
+				"confirm": "OK"
+			},
+			"prompt": {
+				"error": "Something went wrong!",
+				"minted": "Successfully minted!",
+				"twitter": "Do you follow us on Twitter yet?"
+			}
 		},
 		"mint-shop": {
 			"title": "Mint Shop"
