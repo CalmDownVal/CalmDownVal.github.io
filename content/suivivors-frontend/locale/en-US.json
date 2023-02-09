@@ -36,13 +36,18 @@
 		},
 		"my-collection": {
 			"title": "My Collection",
-			"equip": "Equip",
-			"equipped": "Equipped",
-			"try": "Try",
-			"trying": "Trying"
+			"no-trait": "None",
+			"prompt": {
+				"connect-wallet": "To view your collection, please connect your wallet first."
+			}
 		},
 		"error": {
 			"back-home": "Back Home"
+		}
+	},
+	"component": {
+		"character-view": {
+			"active": "Active"
 		}
 	},
 	"social": {
@@ -51,7 +56,7 @@
 	},
 	"wallet": {
 		"connect": "Connect",
-		"connected": "Connected",
+		"connected": "{address}",
 		"disconnect": "Disconnect",
 		"preferred": "Preferred",
 		"other": "Other",
