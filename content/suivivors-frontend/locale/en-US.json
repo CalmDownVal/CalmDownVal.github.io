@@ -45,6 +45,7 @@
 			"action": {
 				"open": "Open",
 				"remove": "Remove",
+				"share": "Share",
 				"swap": "Swap",
 				"try": "Try"
 			},
