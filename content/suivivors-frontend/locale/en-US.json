@@ -37,12 +37,20 @@
 		"my-collection": {
 			"title": "My Collection",
 			"no-trait": "None",
+			"action": {
+				"remove": "Remove",
+				"swap": "Swap",
+				"try": "Try"
+			},
 			"prompt": {
 				"connect-wallet": "To view your collection, please connect your wallet first."
 			}
 		},
 		"error": {
-			"back-home": "Back Home"
+			"title": "Error",
+			"action": {
+				"back-home": "Back Home"
+			}
 		}
 	},
 	"component": {
