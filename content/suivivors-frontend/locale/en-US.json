@@ -43,6 +43,8 @@
 			"no-traits": "No Traits Found",
 			"your-traits": "Your Traits",
 			"action": {
+				"confirm": "OK",
+				"done": "Done",
 				"open": "Open",
 				"remove": "Remove",
 				"share": "Share",
@@ -50,6 +52,7 @@
 				"try": "Try"
 			},
 			"prompt": {
+				"error": "Something went wrong!",
 				"connect-wallet": "To view your collection, please connect your wallet first.",
 				"no-characters": "Go to the home page to mint your first Suivivor!",
 				"no-traits": "Open mystery boxes to get new traits for your Suivivors! You can mint mystery boxes on the home page."
@@ -64,7 +67,8 @@
 	},
 	"component": {
 		"character-view": {
-			"active": "Active"
+			"active": "Active",
+			"loading": "Loading..."
 		}
 	},
 	"social": {
