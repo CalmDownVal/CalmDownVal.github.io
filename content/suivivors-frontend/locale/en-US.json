@@ -36,6 +36,7 @@
 		},
 		"my-collection": {
 			"title": "My Collection",
+			"equipped": "Equipped",
 			"mystery-box": "Mystery Box",
 			"mystery-boxes": "Mystery Boxes",
 			"no-trait": "None",
