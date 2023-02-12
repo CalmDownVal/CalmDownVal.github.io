@@ -68,7 +68,7 @@
 	"component": {
 		"character-view": {
 			"active": "Active",
-			"loading": "Loading..."
+			"loading": "Loading"
 		}
 	},
 	"social": {
