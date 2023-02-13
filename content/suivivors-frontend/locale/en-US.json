@@ -36,13 +36,14 @@
 		},
 		"my-collection": {
 			"title": "My Collection",
+			"customize-suivivor": "Customize Your Suivivor",
 			"equipped": "Equipped",
 			"mystery-box": "Mystery Box",
 			"mystery-boxes": "Mystery Boxes",
 			"no-trait": "None",
 			"no-characters": "No Characters Found",
 			"no-traits": "No Traits Found",
-			"your-traits": "Your Traits",
+			"your-inventory": "Your Inventory",
 			"action": {
 				"confirm": "OK",
 				"done": "Done",
