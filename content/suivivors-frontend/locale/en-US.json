@@ -99,38 +99,52 @@
 		"background": {
 			"title": "Background",
 			"0": "default",
-			"1": "Ethos Background"
+			"1": "Ethos Background",
+			"10": "LightGreen Background"
 		},
 		"item1": {
-			"title": "Item 1"
+			"title": "Item 1",
+			"10": "Wild Wings"
 		},
 		"skin": {
 			"title": "Skin",
 			"0": "default",
-			"1": "Ethos Skin"
+			"1": "Ethos Skin",
+			"10": "Martian Skin",
+			"11": "Brown Skin"
 		},
 		"clothes": {
 			"title": "Clothes",
 			"0": "Ethos Shirt",
 			"1": "Ethos T-Shirt",
 			"2": "Ethos Vest",
-			"3": "Whitelist T-Shirt"
+			"3": "Ethos Whitelist T-Shirt",
+			"10": "Martian Hoodie",
+			"11": "Martian Tanktop",
+			"12": "Martian Vest",
+			"13": "Martian Whitelist T-Shirt"
 		},
 		"mouth": {
 			"title": "Mouth",
 			"0": "Ethos Smile",
-			"1": "Airdrop"
+			"1": "Airdrop",
+			"10": "Martian Smile",
+			"11": "Happy Suivivor"
 		},
 		"eyes": {
 			"title": "Eyes",
 			"0": "default",
-			"1": "Ethos Eyes"
+			"1": "Ethos Eyes",
+			"10": "Martian Eyes"
 		},
 		"hair": {
 			"title": "Hair",
 			"0": "default",
 			"1": "Ethos Original Hair",
-			"2": "Ethos Short Hair"
+			"2": "Ethos Short Hair",
+			"10": "Original Hair",
+			"11": "Martian Hair",
+			"12": "Dreads"
 		},
 		"item2": {
 			"title": "Item 2"
@@ -141,12 +155,15 @@
 		"eyewear": {
 			"title": "Eyewear",
 			"0": "Ethos Round Glasses",
-			"1": "Ethos Heart Glasses"
+			"10": "Martian Glasses",
+			"11": "Ice Glasses"
 		},
 		"headwear": {
 			"title": "Headwear",
 			"0": "Ethos Beanie",
-			"1": "Capy Hat"
+			"1": "Capy Hat",
+			"10": "Martian Cap",
+			"11": "Martian Hat"
 		}
 	}
 }
