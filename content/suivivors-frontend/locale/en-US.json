@@ -1,5 +1,11 @@
 {
 	"title": "Suivivors",
+	"common": {
+		"suivivor": "Suivivor",
+		"mystery-box": "Mystery Box",
+		"collection-suivivor": "{collection} Suivivor",
+		"collection-mystery-box": "{collection} Mystery Box"
+	},
 	"page": {
 		"home": {
 			"title": "Home",
@@ -8,12 +14,7 @@
 			"step-go-to": "Go to",
 			"step-swap": "Swap Traits",
 			"step-share": "Share with everyone!",
-			"mint-promo": "Suivivors X Ethos",
-			"suivivor-ethos": "Ethos Suivivor",
-			"suivivor-ethos-desc": "Unique 1/1 Suivivor",
-			"mystery-box": "Mystery Box",
-			"mystery-box-desc": "With special traits and 100 whitelist spots",
-			"twitter-prompt": "Do you follow us on Twitter yet?",
+			"collection-title": "{collection} Suivivors",
 			"action": {
 				"mint": "Mint",
 				"follow": "Follow",
@@ -37,8 +38,7 @@
 		"my-collection": {
 			"title": "My Collection",
 			"customize-suivivor": "Customize Your Suivivor",
-			"equipped": "Equipped",
-			"mystery-box": "Mystery Box",
+			"traits": "Traits",
 			"mystery-boxes": "Mystery Boxes",
 			"no-trait": "None",
 			"no-characters": "No Characters Found",
@@ -47,6 +47,7 @@
 			"action": {
 				"confirm": "OK",
 				"done": "Done",
+				"equipped": "Equipped",
 				"open": "Open",
 				"remove": "Remove",
 				"share": "Share",
@@ -93,7 +94,8 @@
 		"unknown": "An unknown error occurred in the application."
 	},
 	"collection": {
-		"ethos": "Ethos"
+		"ethos": "Ethos",
+		"martian": "Martian"
 	},
 	"trait": {
 		"background": {
@@ -155,6 +157,7 @@
 		"eyewear": {
 			"title": "Eyewear",
 			"0": "Ethos Round Glasses",
+			"1": "Ethos Heart Glasses",
 			"10": "Martian Glasses",
 			"11": "Ice Glasses"
 		},
