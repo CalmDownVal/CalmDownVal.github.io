@@ -38,12 +38,13 @@
 		"my-collection": {
 			"title": "My Collection",
 			"customize-suivivor": "Customize Your Suivivor",
+			"your-inventory": "Your Inventory",
 			"traits": "Traits",
 			"mystery-boxes": "Mystery Boxes",
-			"no-trait": "None",
 			"no-characters": "No Characters Found",
+			"no-trait": "None",
 			"no-traits": "No Traits Found",
-			"your-inventory": "Your Inventory",
+			"owned-quantity": "You own {quantity} copies of this item",
 			"action": {
 				"confirm": "OK",
 				"done": "Done",
