@@ -71,8 +71,7 @@
 	},
 	"component": {
 		"character-view": {
-			"active": "Active",
-			"loading": "Loading"
+			"active": "Active"
 		}
 	},
 	"social": {
