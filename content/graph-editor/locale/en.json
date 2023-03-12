@@ -1,5 +1,12 @@
 {
-	"foo": {
-		"bar": "Hello, {gender, select, m {Mr.} f {Ms.} other {}} {name}!"
+	"actions": {
+		"add-item": "Add Item"
+	},
+	"shapes": {
+		"circle": "Circle",
+		"square": "Square",
+		"diamond": "Diamond",
+		"triangle": "Triangle",
+		"star": "Star"
 	}
 }
