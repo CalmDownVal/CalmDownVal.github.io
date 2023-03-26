@@ -1,6 +1,13 @@
 {
-	"actions": {
-		"add-item": "Add Item"
+	"component": {
+		"multi-editor": {
+			"array-add": "Add Item",
+			"array-remove": "Remove Item",
+			"reset": "Reset Value"
+		},
+		"select": {
+			"no-results": "No matching items found."
+		}
 	},
 	"shapes": {
 		"circle": "Circle",
