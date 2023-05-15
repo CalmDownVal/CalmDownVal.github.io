@@ -15,6 +15,7 @@
 			"step-swap": "Swap Traits",
 			"step-share": "Share with everyone!",
 			"collection-title": "{collection} Suivivors",
+			"coming-soon": "Coming Soon",
 			"action": {
 				"mint": "Mint",
 				"follow": "Follow",
@@ -62,6 +63,12 @@
 				"no-traits": "Open mystery boxes to get new traits for your Suivivors! You can mint mystery boxes on the home page."
 			}
 		},
+		"capyvivor": {
+			"title": "Capyvivor"
+		},
+		"trait-gallery": {
+			"title": "Trait Gallery"
+		},
 		"error": {
 			"title": "Error",
 			"action": {
@@ -76,7 +83,8 @@
 	},
 	"social": {
 		"discord": "Discord",
-		"twitter": "Twitter"
+		"twitter": "Twitter",
+		"launch-game": "Launch Game"
 	},
 	"wallet": {
 		"connect": "Connect",
@@ -84,9 +92,11 @@
 		"disconnect": "Disconnect",
 		"preferred": "Preferred",
 		"other": "Other",
-		"install-prompt": "{wallet} Is Not Installed",
 		"install": "Install",
-		"back": "Back"
+		"p-opening": "Proceed in your wallet's authorization popup.",
+		"p-not-installed": "This wallet does not seem to be installed.",
+		"p-connected": "Your wallet is connected.",
+		"p-disconnected": "Your wallet has been disconnected."
 	},
 	"error": {
 		"api": "Failed to fetch from the API.",
