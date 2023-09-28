@@ -21,6 +21,10 @@
 	cursor: inherit;
 }
 
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
 body {
 	font-family: 'Raleway', sans-serif;
 	font-weight: 400;
@@ -156,7 +160,7 @@ a {
 				<h2 class="input-wrapper__header">
 					MIDI
 				</h2>
-				<input type="text" class="input-wrapper__input" id="midi-input" value="69" maxlength="8">
+				<input type="text" class="input-wrapper__input" id="midi-input" value="69" maxlength="8" inputMode="decimal">
 			</label>
 			<label class="input-wrapper" id="note-box">
 				<h2 class="input-wrapper__header">
@@ -168,7 +172,7 @@ a {
 				<h2 class="input-wrapper__header">
 					frequency
 				</h2>
-				<input type="text" class="input-wrapper__input" id="freq-input" value="440" maxlength="8">
+				<input type="text" class="input-wrapper__input" id="freq-input" value="440" maxlength="8" inputMode="decimal">
 				<div id="chart-wrapper">
 					<canvas id="chart-canvas"></canvas>
 				</div>
