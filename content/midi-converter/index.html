@@ -396,8 +396,8 @@ a {
 		}
 
 		const ctx = chartContext;
-		const r1 = 5;
-		const r2 = 7;
+		const r1 = 5 * devicePixelRatio;
+		const r2 = 7 * devicePixelRatio;
 		const w = chartWidth;
 		const h = chartHeight;
 		const mx = r1 + Math.round((w - 2 * r1) * distLow / (freqHigh - freqLow));
@@ -407,7 +407,7 @@ a {
 		ctx.strokeStyle = 'black';
 		ctx.fillStyle = 'black';
 
-		ctx.lineWidth = distLow < distHigh ? 2 : 1;
+		ctx.lineWidth = (distLow < distHigh ? 2 : 1) * devicePixelRatio;
 		ctx.beginPath();
 		ctx.moveTo(r1, my - r2);
 		ctx.lineTo(r1, my + r2);
@@ -415,7 +415,7 @@ a {
 		ctx.lineTo(mx, my);
 		ctx.stroke();
 
-		ctx.lineWidth = distHigh < distLow ? 2 : 1;
+		ctx.lineWidth = (distHigh < distLow ? 2 : 1) * devicePixelRatio;
 		ctx.beginPath();
 		ctx.moveTo(w - r1, my - r2);
 		ctx.lineTo(w - r1, my + r2);
