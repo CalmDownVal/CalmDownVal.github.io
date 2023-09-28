@@ -51,6 +51,7 @@ a {
 	gap: 1rem;
 	padding: 1rem;
 	overflow-y: auto;
+	background: linear-gradient(350deg, #282823, #48483f);
 }
 
 
@@ -67,6 +68,8 @@ a {
 
 .input-wrapper {
 	--color: #666;
+	--color-light: #666;
+	--color-dark: #666;
 
 	flex-basis: 30%;
 	position: relative;
@@ -74,12 +77,12 @@ a {
 	display: block;
 	min-height: 10rem;
 	max-height: 10rem;
-	background: var(--color);
-	color: #000;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
 	border-radius: .3rem;
 	transition: box-shadow .3s linear;
 	cursor: pointer;
+	color: #000;
+	background: linear-gradient(350deg, var(--color-dark), var(--color-light));
 }
 
 .input-wrapper:focus-within {
@@ -88,10 +91,21 @@ a {
 }
 
 .input-wrapper__header,
-.input-wrapper > .error {
+.input-wrapper__error {
 	position: absolute;
 	inset: 2rem 0 auto 2rem;
 	font-size: 1.2rem;
+}
+
+.input-wrapper__error {
+	text-shadow:
+		0 0 16px #f25f5c,
+		0 0 12px #f25f5c,
+		0 0 8px #f25f5c;
+}
+
+.input-wrapper__error ~ .input-wrapper__header {
+	display: none;
 }
 
 .input-wrapper__input {
@@ -110,13 +124,22 @@ a {
 	background: rgba(255, 255, 255, .5);
 }
 
-#midi-box { --color: #39a0ed; }
-#note-box { --color: #36f1cd; }
-#freq-box { --color: #ffe066; }
+#midi-box {
+	--color: #39a0ed;
+	--color-light: #61b3f1; /* lighten by 20% */
+	--color-dark: #1484d8; /* darken by 20% */
+}
 
-.input-wrapper > .error {
-	background: var(--color);
-	text-shadow: 0 0 8px #f25f5c;
+#note-box {
+	--color: #36f1cd;
+	--color-light: #5ef4d7; /* lighten by 20% */
+	--color-dark: #0fddb5; /* darken by 20% */
+}
+
+#freq-box {
+	--color: #ffe066;
+	--color-light: #ffe685; /* lighten by 20% */
+	--color-dark: #ffd21f; /* darken by 20% */
 }
 
 
@@ -243,18 +266,19 @@ a {
 
 	function clearErrors(parent = document) {
 		parent
-			.querySelectorAll('.error')
+			.querySelectorAll('.input-wrapper__error')
 			.forEach(node => {
 				node.parentNode.removeChild(node);
 			});
 	}
 
 	function setError(inputNode, text) {
-		clearErrors(inputNode.parentNode);
+		const parent = inputNode.parentNode;
+		clearErrors(parent);
 		const node = document.createElement('span');
-		node.classList.add('error');
+		node.classList.add('input-wrapper__error');
 		node.textContent = text;
-		inputNode.parentNode.insertBefore(node, inputNode);
+		parent.insertBefore(node, parent.firstChild);
 	}
 
 
