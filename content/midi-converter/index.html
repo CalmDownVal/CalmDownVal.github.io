@@ -190,7 +190,7 @@ a {
 
 (() => {
 	const RE_INTEGER = /^-?\d+$/;
-	const RE_FLOAT = /^-?\d+(?:\.\d*)?$/;
+	const RE_FLOAT = /^-?\d+(?:[.,]\d*)?$/;
 	const RE_NOTE = /^([a-g]#?)(\d+)$/i;
 	const NOTE = {
 		'a':   9, 'A':   9,
@@ -313,7 +313,7 @@ a {
 				throw new Error('invalid frequency value');
 			}
 
-			const freq = Number(input);
+			const freq = Number(input.replace(',', '.'));
 			const midi = clampMidi(frequencyToMidi(freq));
 
 			clearErrors();
