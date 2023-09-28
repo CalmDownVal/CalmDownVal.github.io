@@ -40,18 +40,6 @@ a {
 	text-decoration: underline;
 }
 
-.page-header {
-	display: none;
-}
-
-.page-footer {
-	position: fixed;
-	inset: auto 0 0 0;
-	text-align: center;
-	padding: 1rem;
-	color: rgba(255, 255, 255, .7);
-}
-
 
 .layout {
 	position: fixed;
@@ -59,36 +47,33 @@ a {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
+	align-content: center;
 	gap: 1rem;
 	padding: 1rem;
 	overflow-y: auto;
 }
 
-@media (min-width: 600px) {
-	.layout {
-		flex-flow: row nowrap;
-		align-items: center;
-		justify-content: center;
-	}
+
+.page-header {
+	display: none;
 }
 
-@media (min-height: 34rem) {
-	.layout {
-		/* center items vertically once vertical scrolling is not an issue */
-		/* 3 * 10rem for boxes + 2 * 1rem gaps + 2 * 1rem padding = 34rem */
-		justify-content: center;
-	}
+.page-footer {
+	height: 3rem;
+	text-align: center;
+	color: rgba(255, 255, 255, .7);
 }
 
 
 .input-wrapper {
 	--color: #666;
 
-	flex-basis: 300px;
+	flex-basis: 30%;
+	position: relative;
+	z-index: 100;
 	display: block;
 	min-height: 10rem;
 	max-height: 10rem;
-	position: relative;
 	background: var(--color);
 	color: #000;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
@@ -98,6 +83,7 @@ a {
 }
 
 .input-wrapper:focus-within {
+	z-index: 200;
 	box-shadow: 0 0 30px var(--color);
 }
 
@@ -133,18 +119,43 @@ a {
 	text-shadow: 0 0 8px #f25f5c;
 }
 
-@media (min-width: 600px) and (max-width: 800px) {
-	.input-wrapper__input {
-		right: 1rem;
-	}
-}
-
 
 #chart-wrapper {
 	position: absolute;
 	inset: auto 2rem 0 2rem;
 	height: 1.5rem;
 	overflow: hidden;
+}
+
+
+@media (min-width: 600px) {
+	.layout {
+		flex-flow: row wrap;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.page-footer {
+		flex-basis: 100%;
+	}
+
+	.input-wrapper {
+		max-width: 20rem;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
+	.input-wrapper__input {
+		right: 1rem;
+	}
+}
+
+@media (min-height: 38rem) {
+	.layout {
+		/* center items vertically once vertical scrolling is not an issue */
+		/* 3 * 10rem for input boxes + 3rem footer + 3 * 1rem gaps + 2 * 1rem padding = 38rem */
+		justify-content: center;
+	}
 }
 
 		</style>
@@ -177,14 +188,14 @@ a {
 					<canvas id="chart-canvas"></canvas>
 				</div>
 			</label>
+			<footer class="page-footer">
+				MIDI, Note and Frequency Converter
+				&bull;
+				by <a href="https://twitter.com/CalmDownVal" target="_blank">@CalmDownVal</a>
+				&bull;
+				2023
+			</footer>
 		</section>
-		<footer class="page-footer">
-			MIDI, Note and Frequency Converter
-			&bull;
-			by <a href="https://twitter.com/CalmDownVal" target="_blank">@CalmDownVal</a>
-			&bull;
-			2023
-		</footer>
 	</body>
 	<script>
 
