@@ -66,11 +66,30 @@ a {
 }
 
 
+@property --fx-offset-x {
+	syntax: '<percentage>';
+	initial-value: 50%;
+	inherits: false;
+}
+
+@property --fx-offset-y {
+	syntax: '<percentage>';
+	initial-value: 50%;
+	inherits: false;
+}
+
+@property --fx-opacity {
+	syntax: '<number>';
+	initial-value: 1;
+	inherits: false;
+}
+
 .input-wrapper {
 	--color: #666;
 	--color-light: #666;
 	--color-dark: #666;
 
+	box-sizing: border-box;
 	flex-basis: 30%;
 	position: relative;
 	z-index: 100;
@@ -79,15 +98,26 @@ a {
 	max-height: 10rem;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
 	border-radius: .3rem;
-	transition: box-shadow .3s linear;
+	border: 2px solid transparent;
 	cursor: pointer;
 	color: #000;
-	background: linear-gradient(350deg, var(--color-dark), var(--color-light));
+	background:
+		radial-gradient(circle at var(--fx-offset-x) var(--fx-offset-y), rgba(255, 255, 255, .2), rgba(255, 255, 255, 0)) no-repeat 0% 0% / 100% 100% border-box,
+		linear-gradient(350deg, var(--color-dark), var(--color-light)) no-repeat 0% 0% / 100% 100% padding-box,
+		radial-gradient(circle at var(--fx-offset-x) var(--fx-offset-y), rgba(255, 255, 255, var(--fx-opacity)), rgba(255, 255, 255, 0)) no-repeat 0% 0% / 100% 100% border-box,
+		linear-gradient(350deg, var(--color-dark), var(--color-light)) no-repeat 0% 0% / 100% 100% border-box;
+	transition:
+		box-shadow 3s linear,
+		--fx-opacity 2s linear;
 }
 
 .input-wrapper:focus-within {
+	--fx-opacity: 0;
 	z-index: 200;
-	box-shadow: 0 0 30px var(--color);
+	box-shadow: 0 0 60px 5px var(--color);
+	transition:
+		box-shadow .3s linear,
+		--fx-opacity .3s linear;
 }
 
 .input-wrapper__header,
@@ -125,27 +155,28 @@ a {
 }
 
 #midi-box {
-	--color: #39a0ed;
-	--color-light: #61b3f1; /* lighten by 20% */
-	--color-dark: #1484d8; /* darken by 20% */
+	--color: hsl(206, 100%, 58%);
+	--color-light: hsl(206, 100%, 66%);
+	--color-dark: hsl(206, 100%, 46%);
 }
 
 #note-box {
-	--color: #36f1cd;
-	--color-light: #5ef4d7; /* lighten by 20% */
-	--color-dark: #0fddb5; /* darken by 20% */
+	--color: hsl(168, 100%, 48%);
+	--color-light: hsl(168, 100%, 56%);
+	--color-dark: hsl(168, 100%, 36%);
 }
 
 #freq-box {
-	--color: #ffe066;
-	--color-light: #ffe685; /* lighten by 20% */
-	--color-dark: #ffd21f; /* darken by 20% */
+	--color: hsl(48, 100%, 70%);
+	--color-light: hsl(48, 100%, 76%);
+	--color-dark: hsl(48, 100%, 56%);
 }
 
 
 #chart-wrapper {
 	position: absolute;
-	inset: auto 2rem 0 2rem;
+	inset: auto 2rem 1rem 2rem;
+	inset: 2rem 2rem auto 10rem;
 	height: 1.5rem;
 	overflow: hidden;
 }
@@ -433,16 +464,16 @@ a {
 
 		ctx.lineWidth = (distLow < distHigh ? 2 : 1) * devicePixelRatio;
 		ctx.beginPath();
-		ctx.moveTo(r1, my - r2);
-		ctx.lineTo(r1, my + r2);
+		// ctx.moveTo(r1, my - r2);
+		// ctx.lineTo(r1, my + r2);
 		ctx.moveTo(r1, my);
 		ctx.lineTo(mx, my);
 		ctx.stroke();
 
 		ctx.lineWidth = (distHigh < distLow ? 2 : 1) * devicePixelRatio;
 		ctx.beginPath();
-		ctx.moveTo(w - r1, my - r2);
-		ctx.lineTo(w - r1, my + r2);
+		// ctx.moveTo(w - r1, my - r2);
+		// ctx.lineTo(w - r1, my + r2);
 		ctx.moveTo(w - r1, my);
 		ctx.lineTo(mx, my);
 		ctx.stroke();
@@ -470,6 +501,33 @@ a {
 	}
 
 	window.addEventListener('DOMContentLoaded', layoutChart);
+
+
+	// shine effect
+
+	const boxes = document.getElementsByClassName('input-wrapper');
+
+	let pointerX = 0;
+	let pointerY = 0;
+	let fxFrame = undefined;
+
+	function onUpdateGradients() {
+		fxFrame = undefined;
+		for (const box of boxes) {
+			const rect = box.getBoundingClientRect();
+			box.style.setProperty('--fx-offset-x', `${100.0 * (pointerX - rect.left) / rect.width}%`);
+			box.style.setProperty('--fx-offset-y', `${100.0 * (pointerY - rect.top) / rect.height}%`);
+		}
+	}
+
+	window.addEventListener('pointermove', e => {
+		if (e.pointerType === 'mouse') {
+			pointerX = e.clientX;
+			pointerY = e.clientY;
+			fxFrame ??= requestAnimationFrame(onUpdateGradients);
+		}
+	}, { passive: true });
+
 })();
 
 	</script>
