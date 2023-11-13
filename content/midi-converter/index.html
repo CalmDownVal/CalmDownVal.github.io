@@ -175,10 +175,11 @@ a {
 
 #chart-wrapper {
 	position: absolute;
-	inset: auto 2rem 1rem 2rem;
-	inset: 2rem 2rem auto 10rem;
-	height: 1.5rem;
+	inset: auto 2rem 0 2rem;
+	height: 2rem;
 	overflow: hidden;
+	-webkit-mask: linear-gradient(black, rgba(0, 0, 0, 0));
+	mask: linear-gradient(black, rgba(0, 0, 0, 0));
 }
 
 
@@ -349,9 +350,9 @@ a {
 			const midi = clampMidi(Number(input));
 
 			clearErrors();
-			clearChart();
 			setNote(midiToNote(midi));
 			setFrequency(midiToFrequency(midi));
+			updateChart(freq);
 		}
 		catch (ex) {
 			setError(midiInput, ex.message);
@@ -363,9 +364,9 @@ a {
 			const midi = clampMidi(noteToMidi(noteInput.value));
 
 			clearErrors();
-			clearChart();
 			setMidi(midi);
 			setFrequency(midiToFrequency(midi));
+			updateChart(freq);
 		}
 		catch (ex) {
 			setError(noteInput, ex.message);
@@ -383,9 +384,9 @@ a {
 			const midi = clampMidi(frequencyToMidi(freq));
 
 			clearErrors();
-			renderChart(freq);
 			setMidi(midi);
 			setNote(midiToNote(midi));
+			updateChart(freq);
 		}
 		catch (ex) {
 			setError(freqInput, ex.message);
@@ -418,7 +419,7 @@ a {
 	}
 
 
-	// rounding chart
+	// tuning chart
 
 	const chartWrapper = document.querySelector('#chart-wrapper');
 	const chartCanvas = document.querySelector('#chart-canvas');
@@ -426,66 +427,71 @@ a {
 
 	let chartWidth = 100;
 	let chartHeight = 10;
+	let chartCurrent = 0;
+	let chartTarget = 0;
+	let chartHandle;
 
-	function renderChart(freq, tuning = 440) {
-		const midi = Math.round(frequencyToMidi(freq, tuning));
-
-		// get nearest surrounding notes as frequencies
-		let freqLow = midiToFrequency(midi, tuning);
-		let freqHigh;
-		if (freq < freqLow) {
-			freqHigh = freqLow;
-			freqLow = midiToFrequency(midi - 1, tuning);
-		}
-		else {
-			freqHigh = midiToFrequency(midi + 1, tuning);
-		}
-
-		layoutChart();
-		clearChart();
-
-		const distLow = freq - freqLow;
-		const distHigh = freqHigh - freq;
-		if (Math.min(distLow, distHigh) < Number.EPSILON) {
-			return;
-		}
-
+	function renderChart() {
 		const ctx = chartContext;
-		const r1 = 5 * devicePixelRatio;
-		const r2 = 7 * devicePixelRatio;
 		const w = chartWidth;
 		const h = chartHeight;
-		const mx = r1 + Math.round((w - 2 * r1) * distLow / (freqHigh - freqLow));
-		const my = Math.round(h / 2);
+		const padding = 4.0 * devicePixelRatio;
+		const line = 1.0 * devicePixelRatio;
+		const r2 = 6.0 * devicePixelRatio;
+		const r3 = 4.0 * devicePixelRatio;
 
+		ctx.clearRect(0, 0, w, h);
+
+		ctx.save();
 		ctx.translate(0.5, 0.5);
+		ctx.lineWidth = 1.0 * devicePixelRatio;
 		ctx.strokeStyle = 'black';
 		ctx.fillStyle = 'black';
 
-		ctx.lineWidth = (distLow < distHigh ? 2 : 1) * devicePixelRatio;
-		ctx.beginPath();
-		// ctx.moveTo(r1, my - r2);
-		// ctx.lineTo(r1, my + r2);
-		ctx.moveTo(r1, my);
-		ctx.lineTo(mx, my);
-		ctx.stroke();
+		const p0 = { x: padding, y: h };
+		const p1 = { x: w / 2, y: r2 + line + padding };
+		const p2 = { x: w - padding, y: h };
 
-		ctx.lineWidth = (distHigh < distLow ? 2 : 1) * devicePixelRatio;
-		ctx.beginPath();
-		// ctx.moveTo(w - r1, my - r2);
-		// ctx.lineTo(w - r1, my + r2);
-		ctx.moveTo(w - r1, my);
-		ctx.lineTo(mx, my);
-		ctx.stroke();
+		const offset = p1.x ** 2 + p2.y ** 2;
+		const bc = (p0.x ** 2 + p0.y ** 2 - offset) * 0.5;
+		const cd = (offset - p2.x ** 2 - p2.y ** 2) * 0.5;
+		const det = (p0.x - p1.x) * (p1.y - p2.y) - (p1.x - p2.x) * (p0.y - p1.y);
+		const cx = (bc * (p1.y - p2.y) - cd * (p0.y - p1.y)) / det;
+		const cy = (cd * (p0.x - p1.x) - bc * (p1.x - p2.x)) / det;
+		const r1 = Math.sqrt((p2.x - cx) ** 2 + (p2.y - cy) ** 2);
+		const alpha = Math.asin(1.0 - (h - p1.y) / r1);
 
 		ctx.beginPath();
-		ctx.arc(mx, my, r1, 0, 2 * Math.PI, false);
+		ctx.arc(cx, cy, r1, Math.PI - alpha, alpha, false);
+		ctx.stroke();
+
+		ctx.clearRect(cx - r2, cy - r1 - r2, 2.0 * r2, 2.0 * r2);
+
+		ctx.beginPath();
+		ctx.arc(cx, cy - r1, r2, 0, 2.0 * Math.PI, false);
+		ctx.stroke();
+
+		const delta = chartTarget - chartCurrent;
+		chartCurrent += delta * 0.1;
+		if (Math.abs(delta) < Number.EPSILON) {
+			chartCurrent = chartTarget;
+		}
+
+		const beta = Math.PI / 2 - (Math.PI / 2 - alpha) * chartCurrent;
+
+		ctx.beginPath();
+		ctx.arc(cx + Math.cos(beta) * r1, cy - Math.sin(beta) * r1, r3, 0, 2.0 * Math.PI);
 		ctx.fill();
 
-		ctx.translate(-0.5, -0.5);
+		ctx.restore();
+
+		chartHandle = chartCurrent === chartTarget
+			? undefined
+			: requestAnimationFrame(renderChart);
 	}
 
-	function layoutChart() {
+	function updateChart(freq, tuning = 440) {
+		// layout
 		const box = chartWrapper.getBoundingClientRect();
 		chartWidth = Math.floor(box.width * devicePixelRatio);
 		chartHeight = Math.floor(box.height * devicePixelRatio);
@@ -494,13 +500,22 @@ a {
 		chartCanvas.height = chartHeight;
 		chartCanvas.style.width = `${box.width}px`;
 		chartCanvas.style.height = `${box.height}px`;
+
+		// calculate target value
+		const midi = Math.round(frequencyToMidi(freq, tuning));
+		const nearest = midiToFrequency(midi, tuning);
+
+		chartTarget = (freq - nearest) / (
+			freq < nearest
+				? nearest - midiToFrequency(midi - 1, tuning)
+				: midiToFrequency(midi + 1, tuning) - nearest
+			);
+
+		// start animation
+		chartHandle ??= requestAnimationFrame(renderChart);
 	}
 
-	function clearChart() {
-		chartContext.clearRect(0, 0, chartWidth, chartHeight);
-	}
-
-	window.addEventListener('DOMContentLoaded', layoutChart);
+	window.addEventListener('DOMContentLoaded', () => updateChart(440.0));
 
 
 	// shine effect
