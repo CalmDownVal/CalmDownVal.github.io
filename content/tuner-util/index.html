@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="description" content="Converter between MIDI values, note names and frequencies.">
+		<meta name="description" content="Tuner utility with MIDI, note and frequency conversion.">
 		<meta name="keywords" content="midi,frequency,note,music,production">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 		<meta name="author" content="@CalmDownVal">
@@ -32,7 +32,6 @@ body {
 	background: #32322c;
 	color: #fff;
 	cursor: default;
-	padding-bottom: 7rem;
 }
 
 a {
@@ -46,9 +45,9 @@ a {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	align-content: center;
+	align-content: flex-start;
 	gap: 1rem;
-	padding: 1rem;
+	padding: 2rem 1rem;
 	overflow-y: auto;
 	background: linear-gradient(350deg, #282823, #48483f);
 }
@@ -58,13 +57,12 @@ a {
 	align-items: center;
 	justify-content: center;
 	gap: 1rem;
-	padding: 1.5rem 0;
+	margin: 0 0 2rem 0;
 }
 
 .page-footer {
 	box-sizing: border-box;
-	height: 3rem;
-	padding: 1.5rem 0 0 0;
+	margin: 2rem 0 0 0;
 	text-align: center;
 	color: rgba(255, 255, 255, .7);
 }
@@ -218,7 +216,7 @@ a {
 @media (min-width: 600px) {
 	.layout {
 		flex-flow: row wrap;
-		align-items: center;
+		align-content: center;
 		justify-content: center;
 	}
 
@@ -234,14 +232,6 @@ a {
 @media (min-width: 600px) and (max-width: 800px) {
 	.input-wrapper__input {
 		right: 1rem;
-	}
-}
-
-@media (min-height: 38rem) {
-	.layout {
-		/* center items vertically once vertical scrolling is not an issue */
-		/* 3 * 10rem for input boxes + 3rem footer + 3 * 1rem gaps + 2 * 1rem padding = 38rem */
-		justify-content: center;
 	}
 }
 
@@ -346,13 +336,17 @@ class Ping {
 	#osc;
 	#amp;
 
+	constructor(ctx, osc, amp) {
+		this.#ctx = ctx;
+		this.#osc = osc;
+		this.#amp = amp;
+	}
+
 	destroy() {
 		this.#ctx?.close();
 	}
 
 	emit(freq) {
-		this.#ctx ?? this.#setup();
-
 		const t = this.#ctx.currentTime;
 		this.#osc.frequency.setValueAtTime(freq, t);
 		this.#amp.gain.cancelScheduledValues(t);
@@ -360,21 +354,16 @@ class Ping {
 		this.#amp.gain.setTargetAtTime(0.0, t + 0.1, 0.1);
 	}
 
-	#setup(ctx = new AudioContext()) {
-		this.#ctx = ctx;
-		this.#osc = ctx.createOscillator();
-		this.#amp = ctx.createGain();
-		this.#amp.gain.value = 0.0;
-
-		this.#osc.connect(this.#amp);
-		this.#amp.connect(ctx.destination);
-		this.#osc.start();
-	}
-
 	static create(ctx) {
-		const ping = new Ping();
-		ctx && ping.#setup(ctx);
-		return ping;
+		const osc = ctx.createOscillator();
+		const amp = ctx.createGain();
+		amp.gain.value = 0.0;
+
+		osc.connect(amp);
+		amp.connect(ctx.destination);
+		osc.start();
+
+		return new Ping(ctx, osc, amp);
 	}
 }
 
@@ -385,9 +374,18 @@ class Tuner {
 	#worklet;
 	#bins = new Array(16).fill(0.0);
 	#onMessage;
+	#isEnabled = true;
 
-	constructor() {
-		this.#onMessage = e => {
+	constructor(ctx, worklet) {
+		this.#ctx = ctx;
+		this.#worklet = worklet;
+
+		worklet.port.start();
+		worklet.port.addEventListener('message', e => {
+			if (!this.#isEnabled) {
+				return;
+			}
+
 			switch (e.data.kind) {
 				case 'pitch':
 					this.onPitchAvailable?.(e.data.value);
@@ -399,10 +397,11 @@ class Tuner {
 					this.onBinsAvailable?.(this.#bins);
 					break;
 			}
-		};
+		});
 	}
 
 	setEnabled(value) {
+		this.#isEnabled = value;
 		this.#worklet.port.postMessage({
 			kind: 'enable',
 			value: value
@@ -413,7 +412,7 @@ class Tuner {
 		this.#ctx.close();
 	}
 
-	async #setup(ctx) {
+	static async create(ctx) {
 		await ctx.audioWorklet.addModule('./pitch-detect.js');
 		const worklet = new AudioWorkletNode(ctx, 'pitch-detect', {
 			channelCount: 1,
@@ -421,9 +420,6 @@ class Tuner {
 			numberOfInputs: 1,
 			numberOfOutputs: 0
 		});
-
-		worklet.port.addEventListener('message', this.#onMessage);
-		worklet.port.start();
 
 		const stream = await navigator.mediaDevices.getUserMedia({
 			video: false,
@@ -437,14 +433,7 @@ class Tuner {
 		const inputNode = ctx.createMediaStreamSource(stream);
 		inputNode.connect(worklet);
 
-		this.#ctx = ctx;
-		this.#worklet = worklet;
-	}
-
-	static async create(ctx = new AudioContext()) {
-		const tuner = new Tuner();
-		await tuner.#setup(ctx);
-		return tuner;
+		return new Tuner(ctx, worklet);
 	}
 }
 
@@ -479,6 +468,10 @@ class CanvasRenderer {
 
 	clear() {
 		this.#ctx.clearRect(0, 0, this.width, this.height);
+		if (this.#frame) {
+			cancelAnimationFrame(this.#frame);
+			this.#frame = undefined;
+		}
 	}
 
 	updateLayout() {
@@ -812,7 +805,7 @@ class ShineEffect {
 	let isTunerActive = false;
 	recordButton.addEventListener('click', async () => {
 		if (!tuner) {
-			tuner = await Tuner.create();
+			tuner = await Tuner.create(getAudioContext());
 			tuner.onBinsAvailable = onBinsAvailable;
 			tuner.onPitchAvailable = onPitchAvailable;
 		}
@@ -826,8 +819,9 @@ class ShineEffect {
 		}
 	});
 
-	const ping = Ping.create();
+	let ping;
 	pingButton.addEventListener('click', () => {
+		ping ??= Ping.create(getAudioContext());
 		ping.emit(lastFreq);
 	});
 
@@ -848,6 +842,11 @@ class ShineEffect {
 		setNote(Convert.midiToNote(midi), isRounded);
 		setFrequency(freq, 0);
 		tuneChart.update(freq);
+	}
+
+	let audioContext;
+	function getAudioContext() {
+		return audioContext ??= new AudioContext();
 	}
 
 })();
