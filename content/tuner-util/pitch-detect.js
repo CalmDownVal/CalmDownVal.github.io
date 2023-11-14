@@ -80,10 +80,10 @@ function createYinPitchDetector({ fMin, fMax, windowSize, windowOffset, threshol
 class PitchDetectProcessor extends AudioWorkletProcessor {
 	pitchDetector;
 	envelopeObserver;
+	isEnabled = true;
 
 	constructor() {
 		super();
-		this.port.start();
 
 		this.pitchDetector = createYinPitchDetector({
 			fMin: 50, // MIDI: ~31
@@ -108,10 +108,20 @@ class PitchDetectProcessor extends AudioWorkletProcessor {
 				});
 			}
 		});
+
+		this.port.addEventListener('message', e => {
+			switch (e.data.kind) {
+				case 'enable':
+					this.isEnabled = e.data.value;
+					break;
+			}
+		});
+
+		this.port.start();
 	}
 
 	process(inputs, _outputs, _params) {
-		if (inputs.length !== 1 || inputs[0].length !== 1) {
+		if (!(this.isEnabled && inputs.length === 1 && inputs[0].length === 1)) {
 			return true;
 		}
 

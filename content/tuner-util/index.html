@@ -382,6 +382,7 @@ class Tuner {
 	onPitchAvailable;
 	onBinsAvailable;
 	#ctx;
+	#worklet;
 	#bins = new Array(16).fill(0.0);
 	#onMessage;
 
@@ -401,22 +402,28 @@ class Tuner {
 		};
 	}
 
+	setEnabled(value) {
+		this.#worklet.port.postMessage({
+			kind: 'enable',
+			value: value
+		});
+	}
+
 	destroy() {
 		this.#ctx.close();
 	}
 
 	async #setup(ctx) {
-		this.#ctx = ctx;
 		await ctx.audioWorklet.addModule('./pitch-detect.js');
-		const pitchDetectNode = new AudioWorkletNode(ctx, 'pitch-detect', {
+		const worklet = new AudioWorkletNode(ctx, 'pitch-detect', {
 			channelCount: 1,
 			channelCountMode: 'explicit',
 			numberOfInputs: 1,
 			numberOfOutputs: 0
 		});
 
-		pitchDetectNode.port.addEventListener('message', this.#onMessage);
-		pitchDetectNode.port.start();
+		worklet.port.addEventListener('message', this.#onMessage);
+		worklet.port.start();
 
 		const stream = await navigator.mediaDevices.getUserMedia({
 			video: false,
@@ -428,7 +435,10 @@ class Tuner {
 		});
 
 		const inputNode = ctx.createMediaStreamSource(stream);
-		inputNode.connect(pitchDetectNode);
+		inputNode.connect(worklet);
+
+		this.#ctx = ctx;
+		this.#worklet = worklet;
 	}
 
 	static async create(ctx = new AudioContext()) {
@@ -801,19 +811,16 @@ class ShineEffect {
 	let tuner;
 	let isTunerActive = false;
 	recordButton.addEventListener('click', async () => {
-		tuner ??= await Tuner.create();
-		if (tuner) {
-			isTunerActive = !isTunerActive;
-			tuner.onBinsAvailable = isTunerActive ? onBinsAvailable : undefined;
-			tuner.onPitchAvailable = isTunerActive ? onPitchAvailable : undefined;
-		}
-		else {
-			isTunerActive = false;
+		if (!tuner) {
+			tuner = await Tuner.create();
+			tuner.onBinsAvailable = onBinsAvailable;
+			tuner.onPitchAvailable = onPitchAvailable;
 		}
 
+		isTunerActive = !isTunerActive;
+		tuner.setEnabled(isTunerActive);
 		setDisabled(isTunerActive);
 		recordButton.classList.toggle('button--active', isTunerActive);
-
 		if (!isTunerActive) {
 			binChart.clear();
 		}
